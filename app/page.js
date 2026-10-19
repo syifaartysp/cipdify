@@ -516,8 +516,8 @@ export default function Cipdify() {
 
     try {
       const [resIndo, resGlobal] = await Promise.all([
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&country=ID&limit=10`),
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`)
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&country=ID&limit=15`),
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=15`)
       ]);
 
       const dataIndo = await resIndo.json();
@@ -529,7 +529,7 @@ export default function Cipdify() {
       ];
 
       if (combinedResults.length === 0) {
-        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&limit=15`);
+        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&limit=20`);
         const dataFallback = await resFallback.json();
         combinedResults = dataFallback.results || [];
       }
@@ -538,7 +538,7 @@ export default function Cipdify() {
         new Map(combinedResults.map(song => [song.trackId, song])).values()
       );
 
-      setSongResults(uniqueResults.slice(0, 10));
+      setSongResults(uniqueResults.slice(0, 15));
     } catch (err) {
       console.error('Gagal mencari lagu:', err);
     }
@@ -554,8 +554,8 @@ export default function Cipdify() {
 
     try {
       const [resIndo, resGlobal] = await Promise.all([
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&country=ID&limit=10`),
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&limit=10`)
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&country=ID&limit=15`),
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&limit=15`)
       ]);
 
       const dataIndo = await resIndo.json();
@@ -567,7 +567,7 @@ export default function Cipdify() {
       ];
 
       if (combinedResults.length === 0) {
-        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=10`);
+        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=15`);
         const dataFallback = await resFallback.json();
         combinedResults = dataFallback.results || [];
       }
@@ -576,7 +576,7 @@ export default function Cipdify() {
         new Map(combinedResults.map(song => [song.trackId, song])).values()
       );
 
-      setArtistResults(uniqueResults.slice(0, 10));
+      setArtistResults(uniqueResults.slice(0, 15));
     } catch (err) {
       console.error('Gagal mencari artis:', err);
     }
@@ -825,7 +825,7 @@ export default function Cipdify() {
                     handleChange(e);
                     handleLiveSearchSongs(e.target.value);
                   }}
-                  placeholder="e.g. Anti-Hero / Multo"
+                  placeholder="e.g. Anti-Hero / Sial"
                   className={`w-full px-3.5 py-2.5 rounded-xl border focus:outline-none focus:ring-2 transition ${
                     isDarkMode 
                       ? 'bg-[#1A1218] border-[#3D2838] text-white focus:ring-[#D93678]' 
@@ -878,7 +878,7 @@ export default function Cipdify() {
                     handleChange(e);
                     handleLiveSearchArtist(e.target.value);
                   }}
-                  placeholder="e.g. Taylor Swift / Tulus"
+                  placeholder="e.g. Taylor Swift / Mahalini"
                   className={`w-full px-3.5 py-2.5 rounded-xl border focus:outline-none focus:ring-2 transition ${
                     isDarkMode 
                       ? 'bg-[#1A1218] border-[#3D2838] text-white focus:ring-[#D93678]' 
