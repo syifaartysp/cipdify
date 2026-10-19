@@ -1,27 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Scrollbar yang halus dengan warna Pastel */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F9FF;
+  background: #FFF0F5;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C9C2E5;
+  background: #D93678;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b8b0dc;
+  background: #8F2856;
 }
 
-/* Animasi Putaran Piringan Hitam (Disc Icon) */
 @keyframes spinSlow {
   from {
     transform: rotate(0deg);
@@ -35,8 +35,8 @@
   animation: spinSlow 12s linear infinite;
 }
 
-/* Base Body Style */
 body {
-  background-color: #F8F9FF;
-  color: #55536F;
+  background-color: #FFF0F5;
+  color: #D93678;
+  font-family: 'Quicksand', sans-serif;
 }

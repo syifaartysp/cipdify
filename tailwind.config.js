@@ -8,10 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'powder-blue': '#DCE7F7',
-        'lavender': '#C9C2E5',
-        'soft-bg': '#F8F9FF',
-        'slate-text': '#55536F',
+        'cherry-pink': '#D93678',
+        'bubblegum-pink': '#F8C3D9',
+        'berry': '#8F2856',
+        'lavender': '#E4D5FF',
+        'blush-bg': '#FFF0F5',
+        'dark-plum': '#48243A',
+        'dark-bg': '#1A1218',
+        'dark-card': '#281C25',
+        'dark-border': '#3D2838',
       },
       animation: {
         'spin-slow': 'spinSlow 12s linear infinite',

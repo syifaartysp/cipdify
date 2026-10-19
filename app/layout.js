@@ -16,7 +16,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#F8F9FF] text-[#55536F] antialiased`}>
+      <body className={`${inter.className} bg-[#FFF0F5] text-[#48243A] antialiased`}>
         {children}
       </body>
     </html>
