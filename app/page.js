@@ -515,9 +515,11 @@ export default function Cipdify() {
     }
 
     try {
+      const cleanQuery = query.trim();
+
       const [resIndo, resGlobal] = await Promise.all([
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&country=ID&limit=15`),
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=15`)
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&entity=song&country=ID&limit=15`),
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&entity=song&limit=15`)
       ]);
 
       const dataIndo = await resIndo.json();
@@ -529,7 +531,7 @@ export default function Cipdify() {
       ];
 
       if (combinedResults.length === 0) {
-        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&limit=20`);
+        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&limit=15`);
         const dataFallback = await resFallback.json();
         combinedResults = dataFallback.results || [];
       }
@@ -541,6 +543,7 @@ export default function Cipdify() {
       setSongResults(uniqueResults.slice(0, 15));
     } catch (err) {
       console.error('Gagal mencari lagu:', err);
+      setSongResults([]);
     }
   };
 
@@ -553,9 +556,11 @@ export default function Cipdify() {
     }
 
     try {
+      const cleanQuery = query.trim();
+
       const [resIndo, resGlobal] = await Promise.all([
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&country=ID&limit=15`),
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&attribute=artistTerm&limit=15`)
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&entity=song&attribute=artistTerm&country=ID&limit=15`),
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(cleanQuery)}&entity=song&attribute=artistTerm&limit=15`)
       ]);
 
       const dataIndo = await resIndo.json();
@@ -566,12 +571,6 @@ export default function Cipdify() {
         ...(dataGlobal.results || [])
       ];
 
-      if (combinedResults.length === 0) {
-        const resFallback = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&entity=song&limit=15`);
-        const dataFallback = await resFallback.json();
-        combinedResults = dataFallback.results || [];
-      }
-
       const uniqueResults = Array.from(
         new Map(combinedResults.map(song => [song.trackId, song])).values()
       );
@@ -579,6 +578,7 @@ export default function Cipdify() {
       setArtistResults(uniqueResults.slice(0, 15));
     } catch (err) {
       console.error('Gagal mencari artis:', err);
+      setArtistResults([]);
     }
   };
 
@@ -689,8 +689,8 @@ export default function Cipdify() {
       isDarkMode ? 'bg-[#1A1218] text-[#F8C3D9]' : 'bg-[#FFF0F5] text-[#D93678]'
     }`}>
       
-      <header className={`sticky top-0 z-10 border-b py-4 px-6 md:px-12 flex justify-between items-center shadow-xs transition-colors duration-300 ${
-        isDarkMode ? 'bg-[#1A1218] border-[#3D2838]' : 'bg-white/80 border-[#F8C3D9] backdrop-blur-md'
+      <header className={`sticky top-0 z-40 py-4 px-6 md:px-12 flex justify-between items-center shadow-md transition-colors duration-300 ${
+        isDarkMode ? 'bg-[#1A1218] border-b border-[#3D2838]' : 'bg-[#FFF0F5] border-b border-[#F8C3D9]'
       }`}>
         <div className="flex items-center gap-2">
           <Disc className="w-7 h-7 animate-spin-slow text-[#D93678]" />
@@ -795,7 +795,7 @@ export default function Cipdify() {
 
         <div className="flex flex-col lg:flex-row gap-8 items-start w-full">
           
-          <div className={`w-full lg:w-[38%] p-6 rounded-3xl border shadow-sm shrink-0 transition ${
+          <div className={`w-full lg:w-[38%] p-6 rounded-3xl border shadow-sm shrink-0 transition relative z-20 ${
             isDarkMode ? 'bg-[#281C25] border-[#3D2838]' : 'bg-white border-[#F8C3D9] shadow-pink-100/30'
           }`}>
             <div className="flex justify-between items-center mb-5">
@@ -815,7 +815,7 @@ export default function Cipdify() {
 
             <form onSubmit={handleSubmit} className="space-y-3.5 text-sm">
               
-              <div className="relative z-30">
+              <div className="relative">
                 <label className={`block text-xs font-bold mb-1 ${isDarkMode ? 'text-[#F8C3D9]' : 'text-[#D93678]'}`}>{t.labelTitle}</label>
                 <input
                   type="text"
@@ -835,7 +835,7 @@ export default function Cipdify() {
                 />
 
                 {songResults.length > 0 && (
-                  <div className={`absolute left-0 right-0 mt-1 border-2 rounded-2xl shadow-2xl z-40 max-h-60 overflow-y-auto p-2 space-y-1.5 ${
+                  <div className={`absolute left-0 right-0 top-full mt-1 border-2 rounded-2xl shadow-2xl z-50 max-h-60 overflow-y-auto p-2 space-y-1.5 ${
                     isDarkMode ? 'bg-[#281C25] border-[#3D2838]' : 'bg-white border-[#F8C3D9]'
                   }`}>
                     <div className={`px-2 py-1 text-[10px] font-extrabold uppercase rounded-lg ${
@@ -868,7 +868,7 @@ export default function Cipdify() {
                 )}
               </div>
 
-              <div className="relative z-20">
+              <div className="relative">
                 <label className={`block text-xs font-bold mb-1 ${isDarkMode ? 'text-[#F8C3D9]' : 'text-[#D93678]'}`}>{t.labelArtist}</label>
                 <input
                   type="text"
@@ -888,7 +888,7 @@ export default function Cipdify() {
                 />
 
                 {artistResults.length > 0 && (
-                  <div className={`absolute left-0 right-0 mt-1 border-2 rounded-2xl shadow-2xl z-40 max-h-60 overflow-y-auto p-2 space-y-1.5 ${
+                  <div className={`absolute left-0 right-0 top-full mt-1 border-2 rounded-2xl shadow-2xl z-50 max-h-60 overflow-y-auto p-2 space-y-1.5 ${
                     isDarkMode ? 'bg-[#281C25] border-[#3D2838]' : 'bg-white border-[#F8C3D9]'
                   }`}>
                     <div className={`px-2 py-1 text-[10px] font-extrabold uppercase rounded-lg ${
